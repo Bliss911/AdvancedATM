@@ -5,9 +5,13 @@ now = datetime.now()
 dt_string = now.strftime("%B %d, %Y %H:%M:%S")
 print('\n\t\t\t\t\t\t\t %s' %dt_string)
 
+def generateAccountBalance():
+    return random.randrange(1000,50000)
+
 database = {}
 accountBalance = 0
-accountBalance = random.randrange(1000,50000)
+accountBalance = generateAccountBalance()
+print(f"Your account balance is {accountBalance}")
 
 def init():
 
@@ -31,14 +35,15 @@ def login():
 
     # isLoginSuccessful = False
 
-    accountNumberFromUser = int(input("\nWhat is your account number? \n"))
+    accountNumberFromUser = int(input("\nWhat is your account number?\n"))
+
     password = input("What is your password \n")
+    
 
     for accountNumber,userDetails in database.items():
         if accountNumber == accountNumberFromUser:
             if userDetails[3] == password:
-                # accountBalance = generateAccountBalance()
-                print(f"Your account balance is {accountBalance}")
+                
                 bankOperation(userDetails)
                 # isLoginSuccessful = True
 
@@ -73,10 +78,10 @@ def bankOperation(user):
     selectedOption = input("What would you like to do? (1)Deposit (2)Withdrawal (3)Logout (4)Exit\n")
 
     if selectedOption == '1':
-        depositOperation()
+        depositOperation(accountBalance)
 
     elif selectedOption == '2':
-        withdrawalOperation()
+        withdrawalOperation(accountBalance)
 
     elif selectedOption == '3':
         logout()
@@ -90,8 +95,8 @@ def bankOperation(user):
         print("Invalid option selected")
         bankOperation(user)
 
-def withdrawalOperation():
-    print("******** Withdrawal ********")
+def withdrawalOperation(accountBalance):
+    print("\n******** Withdrawal ********")
     
     print(f"Your Account Balance is ${accountBalance}.00\n")
 
@@ -99,23 +104,22 @@ def withdrawalOperation():
     if int(withdrawalAmount) > accountBalance:
         print('\nInsufficient Funds. Please try again later\n\n')
     else:
-        accountBalance -= withdrawalAmount
+        accountBalance -= int(withdrawalAmount)
         print(f'\nTransaction Successful!!! \n\nYour remaining balance is ${accountBalance}.00\nPlease Take your Cash\n\n')
 
     
-def depositOperation():
-    print("******** Deposit Operation ********")
+def depositOperation(accountBalance):
+    print("\n******** Deposit Operation ********")
     print(f"Account balance is {accountBalance}")
     depositAmount = int(input("\nEnter the amount you want to deposit: \n"))
-    deposit = 
+    
     accountBalance += depositAmount
     print(f'\nTransaction Successful!!! \n\nYour balance is ${accountBalance}.00\n\n')
     
 def generateAccountNumber():
     return random.randrange(1111111111,9999999999)
 
-# def generateAccountBalance():
-#     return random.randrange(1000,50000)
+
 
 def logout():
     login()
